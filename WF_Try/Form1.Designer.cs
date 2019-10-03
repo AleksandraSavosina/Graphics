@@ -29,36 +29,29 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.upload = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.changeColor = new System.Windows.Forms.Button();
             this.BlackWhite = new System.Windows.Forms.Button();
-            this.Save = new System.Windows.Forms.Button();
             this.pictureBoxRed = new System.Windows.Forms.PictureBox();
             this.pictureBoxGreen = new System.Windows.Forms.PictureBox();
             this.pictureBoxBlue = new System.Windows.Forms.PictureBox();
             this.Gray = new System.Windows.Forms.Button();
             this.buttonNoRed = new System.Windows.Forms.Button();
-            this.NoNoise = new System.Windows.Forms.Button();
+            this.MedianFilter = new System.Windows.Forms.Button();
             this.Noise = new System.Windows.Forms.Button();
-            this.Glass = new System.Windows.Forms.Button();
+            this.GaussFilter = new System.Windows.Forms.Button();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.menuPicture = new System.Windows.Forms.MenuStrip();
+            this.pictureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Blur = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBlue)).BeginInit();
+            this.menuPicture.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // upload
-            // 
-            this.upload.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.upload.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.upload.Location = new System.Drawing.Point(474, 43);
-            this.upload.Name = "upload";
-            this.upload.Size = new System.Drawing.Size(137, 37);
-            this.upload.TabIndex = 0;
-            this.upload.Text = "Upload";
-            this.upload.UseVisualStyleBackColor = false;
-            this.upload.Click += new System.EventHandler(this.upload_Click);
             // 
             // pictureBox1
             // 
@@ -93,18 +86,6 @@
             this.BlackWhite.Text = "Black/White";
             this.BlackWhite.UseVisualStyleBackColor = false;
             this.BlackWhite.Click += new System.EventHandler(this.BlackWhite_Click);
-            // 
-            // Save
-            // 
-            this.Save.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Save.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.Save.Location = new System.Drawing.Point(631, 43);
-            this.Save.Name = "Save";
-            this.Save.Size = new System.Drawing.Size(137, 37);
-            this.Save.TabIndex = 5;
-            this.Save.Text = "Save";
-            this.Save.UseVisualStyleBackColor = false;
-            this.Save.Click += new System.EventHandler(this.Save_Click);
             // 
             // pictureBoxRed
             // 
@@ -161,21 +142,21 @@
             this.buttonNoRed.UseVisualStyleBackColor = false;
             this.buttonNoRed.Click += new System.EventHandler(this.buttonNoRed_Click);
             // 
-            // NoNoise
+            // MedianFilter
             // 
-            this.NoNoise.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.NoNoise.Location = new System.Drawing.Point(474, 342);
-            this.NoNoise.Name = "NoNoise";
-            this.NoNoise.Size = new System.Drawing.Size(94, 37);
-            this.NoNoise.TabIndex = 13;
-            this.NoNoise.Text = "NoNoise";
-            this.NoNoise.UseVisualStyleBackColor = false;
-            this.NoNoise.Click += new System.EventHandler(this.NoNoise_Click);
+            this.MedianFilter.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.MedianFilter.Location = new System.Drawing.Point(574, 342);
+            this.MedianFilter.Name = "MedianFilter";
+            this.MedianFilter.Size = new System.Drawing.Size(94, 37);
+            this.MedianFilter.TabIndex = 13;
+            this.MedianFilter.Text = "MedianFilter";
+            this.MedianFilter.UseVisualStyleBackColor = false;
+            this.MedianFilter.Click += new System.EventHandler(this.MedianFilter_Click);
             // 
             // Noise
             // 
             this.Noise.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.Noise.Location = new System.Drawing.Point(574, 342);
+            this.Noise.Location = new System.Drawing.Point(474, 286);
             this.Noise.Name = "Noise";
             this.Noise.Size = new System.Drawing.Size(94, 37);
             this.Noise.TabIndex = 16;
@@ -183,16 +164,69 @@
             this.Noise.UseVisualStyleBackColor = false;
             this.Noise.Click += new System.EventHandler(this.Noise_Click);
             // 
-            // Glass
+            // GaussFilter
             // 
-            this.Glass.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.Glass.Location = new System.Drawing.Point(474, 385);
-            this.Glass.Name = "Glass";
-            this.Glass.Size = new System.Drawing.Size(94, 37);
-            this.Glass.TabIndex = 17;
-            this.Glass.Text = "Glass";
-            this.Glass.UseVisualStyleBackColor = false;
-            this.Glass.Click += new System.EventHandler(this.Glass_Click);
+            this.GaussFilter.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.GaussFilter.Location = new System.Drawing.Point(474, 342);
+            this.GaussFilter.Name = "GaussFilter";
+            this.GaussFilter.Size = new System.Drawing.Size(94, 37);
+            this.GaussFilter.TabIndex = 17;
+            this.GaussFilter.Text = "GaussFilter";
+            this.GaussFilter.UseVisualStyleBackColor = false;
+            this.GaussFilter.Click += new System.EventHandler(this.GaussFilter_Click);
+            // 
+            // progressBar
+            // 
+            this.progressBar.BackColor = System.Drawing.SystemColors.Control;
+            this.progressBar.Location = new System.Drawing.Point(12, 422);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(438, 23);
+            this.progressBar.TabIndex = 19;
+            this.progressBar.Click += new System.EventHandler(this.progressBar_Click);
+            // 
+            // menuPicture
+            // 
+            this.menuPicture.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pictureToolStripMenuItem});
+            this.menuPicture.Location = new System.Drawing.Point(0, 0);
+            this.menuPicture.Name = "menuPicture";
+            this.menuPicture.Size = new System.Drawing.Size(844, 24);
+            this.menuPicture.TabIndex = 20;
+            this.menuPicture.Text = "menuPicture";
+            // 
+            // pictureToolStripMenuItem
+            // 
+            this.pictureToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.saveToolStripMenuItem});
+            this.pictureToolStripMenuItem.Name = "pictureToolStripMenuItem";
+            this.pictureToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.pictureToolStripMenuItem.Text = "Picture";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem1_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // Blur
+            // 
+            this.Blur.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.Blur.Location = new System.Drawing.Point(674, 342);
+            this.Blur.Name = "Blur";
+            this.Blur.Size = new System.Drawing.Size(94, 37);
+            this.Blur.TabIndex = 21;
+            this.Blur.Text = "Blur";
+            this.Blur.UseVisualStyleBackColor = false;
+            this.Blur.Click += new System.EventHandler(this.Blur_Click);
             // 
             // Form1
             // 
@@ -201,20 +235,22 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(844, 552);
-            this.Controls.Add(this.Glass);
+            this.Controls.Add(this.Blur);
+            this.Controls.Add(this.menuPicture);
+            this.Controls.Add(this.progressBar);
+            this.Controls.Add(this.GaussFilter);
             this.Controls.Add(this.Noise);
-            this.Controls.Add(this.NoNoise);
+            this.Controls.Add(this.MedianFilter);
             this.Controls.Add(this.buttonNoRed);
             this.Controls.Add(this.Gray);
             this.Controls.Add(this.pictureBoxBlue);
             this.Controls.Add(this.pictureBoxGreen);
             this.Controls.Add(this.pictureBoxRed);
-            this.Controls.Add(this.Save);
             this.Controls.Add(this.BlackWhite);
             this.Controls.Add(this.changeColor);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.upload);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuPicture;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -222,25 +258,33 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGreen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBlue)).EndInit();
+            this.menuPicture.ResumeLayout(false);
+            this.menuPicture.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button upload;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button changeColor;
         private System.Windows.Forms.Button BlackWhite;
-        private System.Windows.Forms.Button Save;
         private System.Windows.Forms.PictureBox pictureBoxRed;
         private System.Windows.Forms.PictureBox pictureBoxGreen;
         private System.Windows.Forms.PictureBox pictureBoxBlue;
         private System.Windows.Forms.Button Gray;
         private System.Windows.Forms.Button buttonNoRed;
-        private System.Windows.Forms.Button NoNoise;
+        private System.Windows.Forms.Button MedianFilter;
         private System.Windows.Forms.Button Noise;
-        private System.Windows.Forms.Button Glass;
+        private System.Windows.Forms.Button GaussFilter;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.MenuStrip menuPicture;
+        private System.Windows.Forms.ToolStripMenuItem pictureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.Button Blur;
+        //private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        //private System.ComponentModel.BackgroundWorker backgroundWorker2;
     }
 }
 

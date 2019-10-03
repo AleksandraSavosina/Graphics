@@ -19,6 +19,7 @@ namespace WF_Try
 
         OpenFileDialog ofd = new OpenFileDialog();
         Bitmap myB, myBack;
+        protected float[,] kernel = null;
 
         //------------------------------openFileDialog------------------------------
         public OpenFileDialog Open()
@@ -40,8 +41,9 @@ namespace WF_Try
             }
             return ofd;
         }
+
         //------------------------------uploadPicture-------------------------------
-        public void upload_Click(object sender, EventArgs e)
+        private void openToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ofd = Open();
             if (pictureBox1.Image != null)
@@ -67,14 +69,14 @@ namespace WF_Try
             if (pictureBox1.Image != null)
             {
                 for (int x = 0; x < myB.Width; x++)
-                { 
+                {
                     for (int y = 0; y < myB.Height; y++)
                     {
-                       Color oldColor = myB.GetPixel(x, y);
-                       Color newColor;
-                      newColor = Color.FromArgb(oldColor.A, 255 - oldColor.R,
-                          255 - oldColor.G, 255 - oldColor.B);
-                      myB.SetPixel(x, y, newColor);
+                        Color oldColor = myB.GetPixel(x, y);
+                        Color newColor;
+                        newColor = Color.FromArgb(oldColor.A, 255 - oldColor.R,
+                            255 - oldColor.G, 255 - oldColor.B);
+                        myB.SetPixel(x, y, newColor);
                         pictureBox1.Image = myB;
                     }
                     Application.DoEvents();
@@ -122,14 +124,14 @@ namespace WF_Try
 
                         newColor = Color.FromArgb(oldColor.A, R, G, B);
                         myB.SetPixel(x, y, newColor);
-                        pictureBox1.Image = myB; 
+                        pictureBox1.Image = myB;
                     }
                     Application.DoEvents();
                 }
             }
         }
         //------------------------------save----------------------------------------
-        private void Save_Click(object sender, EventArgs e) //
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
             {
@@ -142,7 +144,7 @@ namespace WF_Try
                     {
                         pictureBox1.Image.Save(sfd.FileName);
                     }
-                    catch 
+                    catch
                     {
                         MessageBox.Show("It is impossible to open file", "ERROR",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -211,21 +213,21 @@ namespace WF_Try
                     Application.DoEvents();
                 }
 
-               myB = new Bitmap(myBack);
+                myB = new Bitmap(myBack);
             }
         }
         //------------------------------mainForm------------------------------------
         private void Form1_Load(object sender, EventArgs e) { }
         //------------------------------MedianFilter--------------------------------
-        private void NoNoise_Click(object sender, EventArgs e)
+        private void MedianFilter_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
             {
                 int rad = 1; // it can be change
                 int k;
-                for (int x = rad*2; x < myB.Width - rad*2 - 1; x++)
+                for (int x = rad * 2; x < myB.Width - rad * 2 - 1; x++)
                 {
-                    for (int y = rad*2; y < myB.Height - rad*2 - 1; y++)
+                    for (int y = rad * 2; y < myB.Height - rad * 2 - 1; y++)
                     {
                         int n;
                         int medianR, medianB, medianG;     // искомые медианные значения
@@ -257,7 +259,6 @@ namespace WF_Try
                     }
                 }
                 pictureBox1.Image = myB;
-                myB = new Bitmap(myBack);   
             }
             MessageBox.Show("All");
         }
@@ -281,16 +282,10 @@ namespace WF_Try
                     }
                     Application.DoEvents();
                 }
-                myB = new Bitmap(myBack);
             }
         }
-        //------------------------------Glass---------------------------------------
-        private void Glass_Click(object sender, EventArgs e)
-        {
-            if (pictureBox1.Image != null)
-            { }
-        }
-        //------------------------------mainPictureWithoutred-----------------------
+        
+        //------------------------------mainPictureWithoutRed-----------------------
         private void buttonNoRed_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -307,9 +302,143 @@ namespace WF_Try
                     }
                     Application.DoEvents();
                 }
-
-                myB = new Bitmap(myBack);
+                //myB = new Bitmap(myBack);
             }
+        }
+
+        private void contextMenuStrip1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void progressBar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            //myB = 
+        }
+
+        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+
+        //------------------------------Glass---------------------------------------
+        private void GaussFilter_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                //float[,] kernel = null;
+                //CreateGKernel(7, 2);
+
+                int rad = 2;
+                float sig = 2; int k;
+                float sumR, sumG, sumB;
+
+                int size = 2 * rad + 1;
+                kernel = new float[size, size];
+                float norm = 0;
+
+                if (true)
+                {
+                    for (int i = 0; i < 2 * rad + 1; i++)
+                        for (int j = 0; j < 2 * rad + 1; j++)
+                        {
+                            kernel[i, j] = (float)(Math.Exp(-(i * i + j * j) / (sig * sig)));
+
+                            norm += kernel[i, j];
+                        }
+
+                    for (int i = 0; i < size; i++)
+                        for (int j = 0; j < size; j++)
+                            kernel[i, j] /= norm;
+                }
+
+                int cR, cB, cG; int rx = rad, ry;
+
+                for (int x = rad; x < myB.Width - rad - 2; x++){
+                    for (int y = rad; y < myB.Height - rad - 2; y++){
+                        //if (false) {
+                        //    kernel[0, 0] = 0.025F; kernel[0, 4] = 0.025F;
+                        //    kernel[4, 0] = 0.025F; kernel[4, 4] = 0.025F;
+                        //    kernel[0, 1] = 0F; kernel[1, 0] = 0F; kernel[1, 1] = 0F;
+                        //    kernel[0, 3] = 0F; kernel[1, 3] = 0F; kernel[1, 4] = 0F;
+                        //    kernel[3, 0] = 0F; kernel[3, 1] = 0F; kernel[4, 1] = 0F;
+                        //    kernel[3, 3] = 0F; kernel[4, 3] = 0F; kernel[3, 4] = 0F;
+                        //    kernel[2, 0] = 0.05F; kernel[2, 2] = 0.05F;
+                        //    kernel[2, 3] = 0.05F; kernel[2, 4] = 0.05F;
+                        //    kernel[0, 2] = 0.05F; kernel[1, 2] = 0.05F;
+                        //    kernel[3, 2] = 0.05F; kernel[4, 2] = 0.05F;
+                        //    kernel[3, 3] = 0.05F;
+                        //}
+
+                        sumR = 0; sumG = 0; sumB = 0;
+
+                        rx = rad;
+                        for (int i = 0; i < 2 * rad + 1; i++){
+                            ry = rad;
+                            for (int j = 0; j < 2 * rad + 1; j++) { 
+                                System.Drawing.Color color = myB.GetPixel(x - rx, y - ry);
+
+                                cR = Convert.ToInt32(color.R);
+                                cG = Convert.ToInt32(color.G);
+                                cB = Convert.ToInt32(color.B);
+
+                                sumR += kernel[i, j] * (float)cR;
+                                sumG += kernel[i, j] * (float)cG;
+                                sumB += kernel[i, j] * (float)cB;
+                                ry--;
+                            }
+                            rx--;
+                        }
+
+                        Color newColor;
+                        newColor = Color.FromArgb(255, (int)sumR, (int)sumG, (int)sumB);
+                        myB.SetPixel(x, y, newColor);
+                        pictureBox1.Image = myB;
+                    }
+
+                }
+            }
+        }
+
+        private void Blur_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
+
+
+//namespace Sav
+//{
+//    abstract class Filtres
+//    {
+
+//    }
+//}
+
+
+
+
+//------------------------------createGKernel--------------------------------
+//public void CreateGKernel(int rad, float sig)
+//{
+//    int size = 2 * rad + 1;
+//    kernel = new float[size, size];
+//    float norm = 0;
+
+//    for (int i = -rad; i <= rad; i++)
+//        for (int j = -rad; j <= rad; j++)
+//        {
+//            kernel[i + rad, j + rad] = (float)(Math.Exp(-(i * i + j * j) / (sig * sig)));
+//            norm += kernel[i + rad, j + rad];
+//        }
+
+//    for (int i = 0; i < size; i++)
+//        for (int j = 0; j < size; j++)
+//            kernel[i, j] /= norm;
+//}
